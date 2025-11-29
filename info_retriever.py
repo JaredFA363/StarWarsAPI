@@ -27,7 +27,27 @@ def display_ordered_starships_by_name_desc():
     ordered_starships = order_starships_by_name(all_starships, 'desc')
     return ordered_starships
 
+def display_ordered_starships_by_cost(all_starships, direction):
+    if direction == 'asc':
+        ordered_starships_by_name = sorted(all_starships, key=lambda k: k["cost_in_credits"])
+    elif direction == 'desc':
+        ordered_starships_by_name = sorted(all_starships, key=lambda k: k["cost_in_credits"], reverse=True)
+    return ordered_starships_by_name
+    
+def display_ordered_starships_by_cost_asc():
+    all_starships = get_all_starships()
+    ordered_starships = order_starships_by_name(all_starships, 'asc')
+    return ordered_starships
+
+def display_ordered_starships_by_cost_desc():
+    all_starships = get_all_starships()
+    ordered_starships = order_starships_by_name(all_starships, 'desc')
+    return ordered_starships
+
+##Testing
 if __name__ == "__main__":
     #print(get_all_starships())
     all_starships = get_all_starships()
-    ordered_starships = order_starships_by_name(all_starships)
+    #ordered_starships = order_starships_by_name(all_starships)
+
+    print(display_ordered_starships_by_cost_desc())
