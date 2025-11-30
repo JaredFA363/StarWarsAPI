@@ -10,44 +10,27 @@ def get_all_starships():
             all_responses.append(starship)
     return all_responses
 
-def order_starships_by_name(all_starships, direction):
-    if direction == 'asc':
-        ordered_starships_by_name = sorted(all_starships, key=lambda k: k["name"].upper())
-    elif direction == 'desc':
-        ordered_starships_by_name = sorted(all_starships, key=lambda k: k["name"].upper(), reverse=True)
-    return ordered_starships_by_name
-
-def display_ordered_starships_by_name_asc():
+def apply_filters_to_starships(filter_name, filter_order):
     all_starships = get_all_starships()
-    ordered_starships = order_starships_by_name(all_starships, 'asc')
-    return ordered_starships
-
-def display_ordered_starships_by_name_desc():
-    all_starships = get_all_starships()
-    ordered_starships = order_starships_by_name(all_starships, 'desc')
-    return ordered_starships
-
-def order_starships_by_cost(all_starships, direction):
-    if direction == 'asc':
-        ordered_starships_by_cost = sorted(all_starships, key=lambda k: int(k["cost_in_credits"]) if k["cost_in_credits"].isdigit() else float("inf"))
-    elif direction == 'desc':
-        ordered_starships_by_cost = sorted(all_starships, key=lambda k: int(k["cost_in_credits"]) if k["cost_in_credits"].isdigit() else float("inf"), reverse=True)
-    return ordered_starships_by_cost
-    
-def display_ordered_starships_by_cost_asc():
-    all_starships = get_all_starships()
-    ordered_starships = order_starships_by_cost(all_starships, 'asc')
-    return ordered_starships
-
-def display_ordered_starships_by_cost_desc():
-    all_starships = get_all_starships()
-    ordered_starships = order_starships_by_cost(all_starships, 'desc')
-    return ordered_starships
-
-##Testing
-if __name__ == "__main__":
-    #print(get_all_starships())
-    all_starships = get_all_starships()
-    #ordered_starships = order_starships_by_name(all_starships)
-
-    print(display_ordered_starships_by_cost_desc())
+    if filter_name == None and filter_order == None:
+        return all_starships
+    elif filter_name == "name" and filter_order == "asc":
+        ordered_starships = sorted(all_starships, key=lambda k: k["name"].upper())
+        return ordered_starships
+    elif filter_name == "name" and filter_order == "desc":
+        ordered_starships = sorted(all_starships, key=lambda k: k["name"].upper(), reverse=True)
+        return ordered_starships
+    elif filter_name == "cost" and filter_order == "asc":
+        ordered_starships = sorted(all_starships, key=lambda k: int(k["cost_in_credits"]) if k["cost_in_credits"].isdigit() else float("inf"))
+        return ordered_starships
+    elif filter_name == "cost" and filter_order == "desc":
+        ordered_starships = sorted(all_starships, key=lambda k: int(k["cost_in_credits"]) if k["cost_in_credits"].isdigit() else float("inf"), reverse=True)
+        return ordered_starships
+    elif filter_name == "length" and filter_order == "asc":
+        ordered_starships = sorted(all_starships, key=lambda k: float(k["length"]) if k["length"].isdigit() else float("inf"))
+        return ordered_starships
+    elif filter_name == "length" and filter_order == "desc":
+        ordered_starships = sorted(all_starships, key=lambda k: float(k["length"]) if k["length"].isdigit() else float("inf"), reverse=True)
+        return ordered_starships
+    else:
+        return "incorrect filters"

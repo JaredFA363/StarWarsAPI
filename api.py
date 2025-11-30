@@ -18,28 +18,15 @@ app = FastAPI()
 
 @app.get('/starships')
 def get_starships_request(filters: FilterRequest = Depends()):
+    possible_filters = ["cost", "name", "length"]
+    possible_orders = ["asc", "desc"]
+    #return {filters.filter: filters.order}
+
     if filters.filter and filters.order:
-        return {"filter" : filters.filter, "order": filters.order}
-    return info_retriever.display_ordered_starships_by_name_asc()
-
-# @app.get('/starships')
-# def get_starships_req():
-#     return info_retriever.display_ordered_starships_by_name_asc()
-
-# @app.get('/starships/{order}')
-# def get_starships_req(order):
-#     if order == 'asc':
-#         return info_retriever.display_ordered_starships_by_name_asc()
-#     elif order == 'desc':
-#         return info_retriever.display_ordered_starships_by_name_desc()
-#     else:
-#         raise HTTPException(status_code=400, detail="Please enter asc or desc for order")
-    
-# @app.get('/starships/cost/{order}')
-# def get_starships_by_cost_req(order):
-#     if order == 'asc':
-#         return info_retriever.display_ordered_starships_by_cost_asc()
-#     elif order == 'desc':
-#         return info_retriever.display_ordered_starships_by_cost_desc()
-#     else:
-#         raise HTTPException(status_code=400, detail="Please enter asc or desc for order")
+        if filters.filter not in possible_filters:
+            raise HTTPException(status_code=400, detail="Filters must be on of cost,name or length")
+        elif filters.order not in possible_orders:
+            raise HTTPException(status_code=400, detail="Order must be asc or desc")
+        else:
+            return info_retriever.apply_filters_to_starships(filters.filter, filters.order)
+    return info_retriever.apply_filters_to_starships(None,None)
