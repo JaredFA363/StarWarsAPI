@@ -12,9 +12,9 @@ def get_all_starships():
 
 def order_starships_by_name(all_starships, direction):
     if direction == 'asc':
-        ordered_starships_by_name = sorted(all_starships, key=lambda k: k["name"])
+        ordered_starships_by_name = sorted(all_starships, key=lambda k: k["name"].upper())
     elif direction == 'desc':
-        ordered_starships_by_name = sorted(all_starships, key=lambda k: k["name"], reverse=True)
+        ordered_starships_by_name = sorted(all_starships, key=lambda k: k["name"].upper(), reverse=True)
     return ordered_starships_by_name
 
 def display_ordered_starships_by_name_asc():
@@ -27,21 +27,21 @@ def display_ordered_starships_by_name_desc():
     ordered_starships = order_starships_by_name(all_starships, 'desc')
     return ordered_starships
 
-def display_ordered_starships_by_cost(all_starships, direction):
+def order_starships_by_cost(all_starships, direction):
     if direction == 'asc':
-        ordered_starships_by_name = sorted(all_starships, key=lambda k: k["cost_in_credits"])
+        ordered_starships_by_cost = sorted(all_starships, key=lambda k: int(k["cost_in_credits"]) if k["cost_in_credits"].isdigit() else float("inf"))
     elif direction == 'desc':
-        ordered_starships_by_name = sorted(all_starships, key=lambda k: k["cost_in_credits"], reverse=True)
-    return ordered_starships_by_name
+        ordered_starships_by_cost = sorted(all_starships, key=lambda k: int(k["cost_in_credits"]) if k["cost_in_credits"].isdigit() else float("inf"), reverse=True)
+    return ordered_starships_by_cost
     
 def display_ordered_starships_by_cost_asc():
     all_starships = get_all_starships()
-    ordered_starships = order_starships_by_name(all_starships, 'asc')
+    ordered_starships = order_starships_by_cost(all_starships, 'asc')
     return ordered_starships
 
 def display_ordered_starships_by_cost_desc():
     all_starships = get_all_starships()
-    ordered_starships = order_starships_by_name(all_starships, 'desc')
+    ordered_starships = order_starships_by_cost(all_starships, 'desc')
     return ordered_starships
 
 ##Testing
